@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contacto | GUGU'S STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Dancing+Script&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #fdf6f0;
+      margin: 0;
+      padding: 0;
+      color: #5d4a75;
+    }
+
+    .contact-container {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fff0f5;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 8px rgba(173, 143, 173, 0.2);
+    }
+
+    h2 {
+      font-family: 'Dancing Script', cursive;
+      text-align: center;
+      color: #a678b4;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: bold;
+      color: #805C9E;
+    }
+
+    input, textarea {
+      padding: 0.8rem;
+      border: 2px solid #e0c6f1;
+      border-radius: 1rem;
+      font-size: 1rem;
+      background-color: #fffaff;
+      resize: none;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #c497d3;
+      background: #fff6fb;
+    }
+
+    button {
+      background-color: #c497d3;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #a678b4;
+    }
+
+    @media screen and (max-width: 600px) {
+      .contact-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contact-container">
+    <h2>💌 Contáctanos</h2>
+    <form action="https://formsubmit.co/tu_correo@ejemplo.com" method="POST">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="email">Correo electrónico:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </div>
+
+</body>
+</html>

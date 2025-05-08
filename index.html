@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GUGU'S STORE</title>
+  <title>🐾✨ Gugu's Store</title>
+  <link rel="icon" href="./images/icons8-gato.gif" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -526,6 +527,24 @@
       // Mostrar todos los productos al inicio
       mostrarProductos(catalogo);
     });
+
+
+
+    let titleText = "🐾✨ Gugu's Store";
+  let position = 0;
+
+  function scrollTitle() {
+    document.title = titleText.substring(position) + titleText.substring(0, position);
+    position = (position + 1) % titleText.length;
+    setTimeout(scrollTitle, 200); // cambia la velocidad (en milisegundos)
+  }
+
+  scrollTitle();
+
+
+
+
+
   </script>
   
 

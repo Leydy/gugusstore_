@@ -1,27 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GUGU'S STORE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    /* Estilos generales */
+
+
+
+
     body {
       margin: 0;
       font-family: 'Baloo 2', cursive;
       background-color: #fffafc;
       color: #4c4c4c;
+      overflow-x: hidden;
     }
     header {
-      background-color: #ffd6e0;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
+  animation: slideDown 0.5s ease-out;
+}
+
+.store-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 20px;
+  flex-grow: 1;
+}
+
+.store-title span {
+  font-weight: normal;
+  font-size: 14px;
+  color: #666;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
     header h1 {
       margin: 0;
       font-size: 2rem;
@@ -34,11 +63,6 @@
       border-radius: 10px;
       border: 1px solid #ddd;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-    }
-    .cart-icon span {
-      margin-left: 5px;
     }
     nav {
       background-color: #ffe3ec;
@@ -81,7 +105,6 @@
     .product-card img {
       width: 100%;
       border-radius: 10px;
-      cursor: pointer;
     }
     .product-card h3 {
       color: #9f5f80;
@@ -95,232 +118,416 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
-    /* Estilos para el modal */
-    .modal {
-      display: none; /* Ocultar el modal por defecto */
+    .cart {
       position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
-      overflow: auto;
-    }
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 600px;
-    }
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-    .modal-images {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .modal-images img {
-      width: 80px;
-      height: 80px;
-      cursor: pointer;
+      top: 4.5rem;
+      left: 1rem;
+      background: #fff0f5;
+      border: 1px solid #ddd;
+      padding: 1rem;
       border-radius: 10px;
+      max-width: 300px;
+      z-index: 999;
+      display: none;
     }
-    .modal-details {
+    .cart-total {
+      font-weight: bold;
       margin-top: 1rem;
-      font-size: 1rem;
     }
-    .modal-details p {
-      margin: 0.5rem 0;
+    .cart button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #5e548e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }
+    footer {
+      background-color: #ffe3ec;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #7a5c61;
+    }
+    .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(200, 200, 200, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.modal-content {
+  background-color: #fef6f9; /* color pastel rosado claro */
+  padding: 30px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 320px;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #5d5c61;
+  margin-top: 10px;
+}
+
+.modal-content p {
+  color: #6d6d6d;
+  margin-bottom: 15px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.modal-content button {
+  background-color: #ff8fab; /* verde pastel */
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #905fcc;
+}
+
+.logo-modal {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+
   </style>
 </head>
-<body>
-  <header>
-    <h1>GUGU'S STOREEE</h1>
-    <div class="cart-icon" onclick="toggleCart()">
-      🛒 <span id="cart-count">0</span>
-    </div>
-  </header>
+<!-- Modal para ingresar el nombre del usuario -->
+<div id="nombreModal" class="modal">
+  <div class="modal-content">
+    <img src="./images/logo.png" alt="Logo" class="logo-modal" />
+    <h2>¡Bienvenido!</h2>
+    <p>Por favor, ingresa tu nombre:</p>
+    <input type="text" id="nombreInput" placeholder="Tu nombre" />
+    <button id="guardarNombre">Ingresar</button>
+  </div>
+</div>
 
+
+
+<body>
+  <header class="slide-down">
+    <img src="./images/nav.png" alt="" width="150px" height="45px">
+    <span id="saludo-usuario" style="margin-left: auto; font-weight: bold; color: #905fcc;">🐾</span>
+    <img id="gatito" src="https://i.gifer.com/19wE.gif" alt="Gatito caminando" style="height: 50px; margin-left: 10px;">
+    <div class="cart-icon" onclick="toggleCart()">🛒 <span id="cart-count">0</span></div>
+  </header>
   <nav>
     <a href="#">Inicio</a>
     <a href="#productos">Productos</a>
     <a href="#contacto">Contacto</a>
   </nav>
+  <style>
+    .hero {
+      background-color: #fff0f5; /* rosa pastel suave */
+      text-align: center;
+      padding: 2rem 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 1rem;
+      font-family: 'Open Sans', sans-serif;
+    }
+  
+    .hero img {
+      max-width: 120px;
+      
+      
+    }
+  
+    .hero p {
+      font-size: 1rem;
+      margin: 0.3rem auto;
+      color: #5d4a75;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      gap: 0.5rem;
+      max-width: 300px;
+    }
+  
+    .social-icons {
+      margin-top: 1rem;
+    }
+  
+    .social-icons a {
+      margin: 0 0.5rem;
+      color: #d291bc;
+      font-size: 1.4rem;
+      transition: color 0.3s;
+    }
+  
+    .social-icons a:hover {
+      color: #b77eb7;
+    }
+  
+    @media (min-width: 600px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+  
+      .hero img {
+        max-width: 150px;
+      }
+  
+      .social-icons a {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <section class="hero">
-    <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="Logo gatito" />
-    <h2>Bisutería y accesorios para amantes de los gatos</h2>
+    <img src="./images/logo.png" alt="Logo gatito">
+    
+    <p>🛒 Tienda online 🇵🇪</p>
+    <p>💍 Accesorios gatunos únicos 🐾</p>
+    <p>📦 Envíos a todo el Perú</p>
+    <p>🚨 Stock limitado </p>
+  
+  
+    <div class="social-icons">
+      <a href="https://www.facebook.com/gugusstore" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/gugusstore_" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@gugusstore" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
   </section>
 
-  <section class="products" id="productos"></section>
 
-  <!-- Modal de detalles del producto -->
-  <div id="modalProducto" class="modal">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <h2 id="modalProductoNombre"></h2>
-      <img id="modalProductoImagen" src="" alt="" style="width: 100%; border-radius: 10px;">
-      <p id="modalProductoPrecio"></p>
-      <p id="modalProductoDescripcion"></p>
-      <div id="modalProductoGaleria" class="modal-images"></div>
-      
-      <div id="modalProductoDetalles" class="modal-details">
-        <p><strong>Color:</strong> <span id="modalProductoColor"></span></p>
-        <p><strong>Material:</strong> <span id="modalProductoMaterial"></span></p>
-        <p><strong>Diseño:</strong> <span id="modalProductoDiseño"></span></p>
-      </div>
 
-      <button id="btnAgregarCarrito" onclick="agregarAlCarritoDesdeModal()">Agregar al carrito</button>
-    </div>
+  <style>
+    .filtro-contenedor {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem;
+      margin-top: 1rem;
+      background-color: #fef6f9; /* color pastel suave */
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .filtro-contenedor label {
+      font-weight: bold;
+      color: #6c5b7b;
+      font-family: 'Open Sans', sans-serif;
+    }
+  
+    .filtro-contenedor select {
+      padding: 0.5rem 1rem;
+      border: 1px solid #d3cce3;
+      border-radius: 8px;
+      background-color: #f0eafc;
+      color: #5d4a75;
+      font-size: 1rem;
+      font-family: 'Open Sans', sans-serif;
+      transition: all 0.3s ease;
+    }
+  
+    .filtro-contenedor select:hover {
+      background-color: #e5dff5;
+      cursor: pointer;
+    }
+  
+    @media (min-width: 600px) {
+      .filtro-contenedor {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  </style>
+  
+  <div class="filtro-contenedor">
+    <label for="categoria">Filtrar por categoría:</label>
+    <select id="categoria" onchange="filtrarYOrdenar()">
+      <option value="todos">Todos</option>
+      <option value="Collar">Collares</option>
+      <option value="Aretes">Aretes</option>
+      <option value="Pulsera">Pulseras</option>
+    </select>
+  
+    <label for="orden">Ordenar por precio:</label>
+    <select id="orden" onchange="filtrarYOrdenar()">
+      <option value="default">Por defecto</option>
+      <option value="asc">Menor a mayor</option>
+      <option value="desc">Mayor a menor</option>
+    </select>
   </div>
-
+  
+  
+  
+  
+  <section class="products" id="productos"></section>
+  <div class="cart" id="cart">
+    <h3>🛍 Tu carrito</h3>
+    <ul id="cart-items" style="padding-left: 1rem;"></ul>
+    <p class="cart-total">Total: S/<span id="cart-total">0.00</span></p>
+    <button onclick="finalizarCompra()">Finalizar compra</button>
+  </div>
   <footer id="contacto">
     <p>&copy; 2025 GUGU'S STORE - Todos los derechos reservados.</p>
     <p>Contáctanos: <a href="mailto:contacto@gugusstore.com">contacto@gugusstore.com</a></p>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Carrito
-      const cart = JSON.parse(localStorage.getItem('carrito')) || [];
-      const cartCount = document.getElementById('cart-count');
-      renderCartCount();
+    
 
+    document.addEventListener('DOMContentLoaded', function () {
+  const modal = document.getElementById('nombreModal');
+  const input = document.getElementById('nombreInput');
+  const btn = document.getElementById('guardarNombre');
+  const saludo = document.getElementById('saludo-usuario');
+
+  let nombre = localStorage.getItem('nombreUsuario');
+
+  if (!nombre) {
+    modal.style.display = 'flex';
+  } else {
+    saludo.textContent = `Hola, ${nombre}`;
+  }
+
+  btn.addEventListener('click', function () {
+    const nombreIngresado = input.value.trim();
+    if (nombreIngresado) {
+      localStorage.setItem('nombreUsuario', nombreIngresado);
+      saludo.textContent = `Hola, ${nombreIngresado}`;
+      modal.style.display = 'none';
+    } else {
+      alert("Por favor ingresa un nombre válido.");
+    }
+  });
+});
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
       const catalogo = [
-        {
-          nombre: 'Collar Gatito de Plata',
-          precio: 35,
-          descripcion: 'Collar elegante con diseño de gatito.',
-          imagen: 'https://tse3.mm.bing.net/th?id=OIP.LZ88Wytc39n-2UZ9NunRUQHaEK&pid=Api&P=0&h=180',
-          imagenesAdicionales: [
-            'https://tse3.mm.bing.net/th?id=OIP.LZ88Wytc39n-2UZ9NunRUQHaEK&pid=Api&P=0&h=180',
-            'https://cdn.pixabay.com/photo/2016/03/27/18/53/jewelry-1286346_960_720.jpg'
-          ],
-          color: 'Plata',
-          material: 'Plata esterlina',
-          diseño: 'Gatito minimalista'
-        },
-        {
-          nombre: 'Aretes Gatunos',
-          precio: 25,
-          descripcion: 'Aretes en forma de orejas de gato.',
-          imagen: 'https://cdn.pixabay.com/photo/2016/11/29/05/15/earrings-1866067_960_720.jpg',
-          imagenesAdicionales: [
-            'https://cdn.pixabay.com/photo/2016/11/29/05/15/earrings-1866067_960_720.jpg',
-            'https://cdn.pixabay.com/photo/2016/11/29/05/15/earrings-1866067_960_720.jpg'
-          ],
-          color: 'Dorado',
-          material: 'Acero inoxidable',
-          diseño: 'Orejas de gato'
-        },
-        {
-          nombre: 'Pulsera Amor Felino',
-          precio: 30,
-          descripcion: 'Pulsera con temática de gatos y corazones.',
-          imagen: 'https://cdn.pixabay.com/photo/2016/03/27/18/53/jewelry-1286346_960_720.jpg',
-          imagenesAdicionales: [
-            'https://cdn.pixabay.com/photo/2016/03/27/18/53/jewelry-1286346_960_720.jpg',
-            'https://cdn.pixabay.com/photo/2016/03/27/18/53/jewelry-1286346_960_720.jpg'
-          ],
-          color: 'Rosa',
-          material: 'Cuero',
-          diseño: 'Corazón y gato'
-        }
+        { nombre: 'Aretes gatitos', precio: 13, categoria: 'Aretes', imagen: 'https://img.kwcdn.com/product/fancy/4e73342b-27bd-495d-8b80-2c5d71db1a1a.jpg?imageView2/2/w/800/q/70/format/webp' },
+        { nombre: 'Pulsera Maneki-neko', precio: 12, categoria: 'Pulsera', imagen: 'https://img.kwcdn.com/product/fancy/28c3c30c-d043-4791-a8db-19857b1d9c2f.jpg?imageView2/2/w/800/q/70/format/webp' },
+        { nombre: 'Aretes gatito perla', precio: 11, categoria: 'Aretes', imagen: 'https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/c4e40626d0658ce496db2868a2913f95.jpg?imageView2/2/w/800/q/70/format/webp', },
+        { nombre: 'Aretes asimétricos, gatito / pez', precio: 10, categoria: 'Collar', imagen: 'https://img.kwcdn.com/product/open/1ef7487bdd6448029cf37e4fe37f900f-goods.jpeg?imageView2/2/w/800/q/70/format/webp' }
       ];
-
+  
       const container = document.querySelector(".products");
-
-      catalogo.forEach((item, index) => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
-          <img src="${item.imagen}" alt="${item.nombre}" onclick="mostrarDetalles(${index})">
-          <h3>${item.nombre}</h3>
-          <p>S/${item.precio.toFixed(2)}</p>
-          <button onclick="agregarAlCarrito(${index})">Agregar al carrito</button>
-        `;
-        container.appendChild(card);
-      });
-
-      window.mostrarDetalles = function(index) {
-        const producto = catalogo[index];
-        document.getElementById("modalProductoNombre").textContent = producto.nombre;
-        document.getElementById("modalProductoImagen").src = producto.imagen;
-        document.getElementById("modalProductoPrecio").textContent = `S/${producto.precio.toFixed(2)}`;
-        document.getElementById("modalProductoDescripcion").textContent = producto.descripcion;
-        
-        // Mostrar las imágenes adicionales en el modal
-        const galeria = document.getElementById("modalProductoGaleria");
-        galeria.innerHTML = '';
-        producto.imagenesAdicionales.forEach(imgSrc => {
-          const img = document.createElement("img");
-          img.src = imgSrc;
-          img.onclick = () => {
-            document.getElementById("modalProductoImagen").src = imgSrc;
-          };
-          galeria.appendChild(img);
+      const cartList = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+      const cartCount = document.getElementById("cart-count");
+      const cartBox = document.getElementById("cart");
+  
+      let carrito = [];
+      let total = 0;
+  
+      function mostrarProductos(productos) {
+        container.innerHTML = "";
+        productos.forEach((item, index) => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          card.innerHTML = `
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <h3>${item.nombre}</h3>
+            <p>S/ ${item.precio.toFixed(2)}</p>
+            <button onclick="agregarAlCarrito(${index})">Agregar</button>
+          `;
+          container.appendChild(card);
         });
-
-        // Mostrar los detalles del producto en el modal
-        document.getElementById("modalProductoColor").textContent = producto.color;
-        document.getElementById("modalProductoMaterial").textContent = producto.material;
-        document.getElementById("modalProductoDiseño").textContent = producto.diseño;
-
-        document.getElementById("modalProducto").style.display = "block"; // Mostrar el modal
       }
-
-      // Cerrar el modal al hacer clic en la 'X'
-      document.getElementById("closeModal").onclick = function() {
-        document.getElementById("modalProducto").style.display = "none";
-      }
-
-      // Cerrar el modal si se hace clic fuera del contenido
-      window.onclick = function(event) {
-        if (event.target == document.getElementById("modalProducto")) {
-          document.getElementById("modalProducto").style.display = "none";
+  
+      window.agregarAlCarrito = function (index) {
+        const item = catalogo[index];
+        carrito.push(item);
+        total += item.precio;
+        cartList.innerHTML += `<li>${item.nombre} - S/ ${item.precio.toFixed(2)}</li>`;
+        cartTotal.textContent = total.toFixed(2);
+        cartCount.textContent = carrito.length;
+      };
+  
+      window.toggleCart = function () {
+        cartBox.style.display = cartBox.style.display === "none" ? "block" : "none";
+      };
+  
+      window.finalizarCompra = function () {
+        if (carrito.length === 0) {
+          alert("Tu carrito está vacío.");
+          return;
         }
-      }
-
-      // Agregar al carrito desde el modal
-      window.agregarAlCarritoDesdeModal = function() {
-        const productoNombre = document.getElementById("modalProductoNombre").textContent;
-        const productoPrecio = parseFloat(document.getElementById("modalProductoPrecio").textContent.replace('S/', ''));
-        
-        const producto = { nombre: productoNombre, precio: productoPrecio };
-        cart.push(producto);
-        localStorage.setItem('carrito', JSON.stringify(cart));
-        alert(`${productoNombre} agregado al carrito`);
-        renderCartCount();
-      }
-
-      // Actualizar el contador del carrito
-      function renderCartCount() {
-        const cart = JSON.parse(localStorage.getItem('carrito')) || [];
-        cartCount.textContent = cart.length;
-      }
-
-      // Mostrar carrito
-      function toggleCart() {
-        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-        alert(`Tienes ${carrito.length} productos en el carrito.`);
-      }
+        const mensaje = carrito.map(item => `${item.nombre} - S/ ${item.precio.toFixed(2)}`).join('\n');
+        const totalFinal = total.toFixed(2);
+        const mensajeWhatsApp = encodeURIComponent(`Hola, quiero finalizar la compra con los siguientes productos:\n${mensaje}\nTotal: S/ ${totalFinal}`);
+        const numero = '51907585882'; // Tu número con código país
+        window.open(`https://wa.me/${numero}?text=${mensajeWhatsApp}`, "_blank");
+  
+        // Resetear carrito
+        carrito = [];
+        total = 0;
+        cartList.innerHTML = "";
+        cartTotal.textContent = "0.00";
+        cartCount.textContent = "0";
+        cartBox.style.display = "none";
+      };
+  
+      window.filtrarYOrdenar = function () {
+        const categoria = document.getElementById("categoria").value;
+        const orden = document.getElementById("orden").value;
+  
+        let productosFiltrados = catalogo.filter(item => categoria === "todos" || item.categoria === categoria);
+  
+        if (orden === "asc") {
+          productosFiltrados.sort((a, b) => a.precio - b.precio);
+        } else if (orden === "desc") {
+          productosFiltrados.sort((a, b) => b.precio - a.precio);
+        }
+  
+        mostrarProductos(productosFiltrados);
+      };
+  
+      // Mostrar todos los productos al inicio
+      mostrarProductos(catalogo);
     });
   </script>
+  
+
 </body>
 </html>

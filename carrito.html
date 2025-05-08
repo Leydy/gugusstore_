@@ -1,0 +1,45 @@
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cart = JSON.parse(localStorage.getItem('carrito')) || [];
+    const detalle = document.getElementById('detalle-cart');
+    const totalSpan = document.getElementById('detalle-total');
+
+    let total = 0;
+
+    function renderCart() {
+      detalle.innerHTML = '';
+      total = 0;
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          ${item.nombre} - S/${item.precio.toFixed(2)}
+          <button onclick="eliminarItem(${index})">❌</button>
+        `;
+        detalle.appendChild(li);
+        total += item.precio;
+      });
+      totalSpan.textContent = total.toFixed(2);
+      localStorage.setItem('carrito', JSON.stringify(cart));
+    }
+
+    window.eliminarItem = function(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    window.finalizarCompra = function() {
+      const mensaje = cart.map(item => `• ${item.nombre} - S/${item.precio.toFixed(2)}`).join('%0A');
+      const totalTexto = `%0A🧾 Total: S/${total.toFixed(2)}`;
+      const numero = '51907585882';
+
+      const url = `https://wa.me/${numero}?text=Hola,%20deseo%20comprar%20los%20siguientes%20productos:%0A${mensaje}${totalTexto}`;
+      window.open(url, '_blank');
+
+      localStorage.removeItem('carrito');
+      location.reload();
+    }
+
+    renderCart();
+  });
+</script>

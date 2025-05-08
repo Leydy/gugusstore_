@@ -1,0 +1,56 @@
+
+body {
+  margin: 0;
+  font-family: 'Baloo 2', cursive;
+  background-color: #fffafc;
+  color: #4c4c4c;
+}
+header {
+  background-color: #ffd6e0;
+  padding: 1rem;
+  text-align: center;
+}
+h1 {
+  margin: 0;
+  color: #5e548e;
+}
+.cart-button {
+  display: inline-block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  background: #ff8fab;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+.product-card {
+  background-color: #fff0f5;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 250px;
+  padding: 1rem;
+  text-align: center;
+}
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+.product-card h3 {
+  color: #9f5f80;
+}
+.product-card button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  background-color: #ff8fab;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}

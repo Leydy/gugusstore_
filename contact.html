@@ -57,33 +57,46 @@
     }
 
     button {
-      background-color: #c497d3;
-      color: white;
-      border: none;
-      padding: 0.8rem;
-      font-size: 1rem;
-      border-radius: 1.2rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+  background-color: #c497d3;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-    button:hover {
-      background-color: #a678b4;
-    }
+button:hover {
+  background-color: #a678b4;
+}
 
-    @media screen and (max-width: 600px) {
-      .contact-container {
-        margin: 1rem;
-        padding: 1.5rem;
-      }
-    }
+button .paw {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: pawprint 0.8s forwards;
+}
+
+@keyframes pawprint {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.6);
+  }
+}
   </style>
 </head>
 <body>
 
   <div class="contact-container">
     <h2>💌 Contáctanos</h2>
-    <form action="https://formsubmit.co/tu_correo@ejemplo.com" method="POST">
+    <form action="https://formsubmit.co/leydymayumy@gmail.com" method="POST">
       <label for="nombre">Nombre:</label>
       <input type="text" id="nombre" name="nombre" required>
 
@@ -96,6 +109,17 @@
       <button type="submit">Enviar mensaje</button>
     </form>
   </div>
-
+  <script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+      const btn = e.target.querySelector("button");
+      const paw = document.createElement("span");
+      paw.classList.add("paw");
+      paw.textContent = "🐾";
+      paw.style.left = Math.random() * 80 + "px";
+      paw.style.top = "0px";
+      btn.appendChild(paw);
+      setTimeout(() => paw.remove(), 800);
+    });
+  </script>
 </body>
 </html>

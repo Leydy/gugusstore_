@@ -235,6 +235,11 @@
 
 <body>
   <header class="slide-down">
+    <audio id="bgMusic" autoplay loop preload="auto">
+      <source src="./resources/sound.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+    
     <img src="./images/nav.png" alt="" width="150px" height="45px">
     <span id="saludo-usuario" style="margin-left: auto; font-weight: bold; color: #905fcc;">🐾</span>
     <img id="gatito" src="https://i.gifer.com/19wE.gif" alt="Gatito caminando" style="height: 50px; margin-left: 10px;">
@@ -542,6 +547,15 @@
   scrollTitle();
 
 
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    const bgMusic = document.getElementById('bgMusic');
+    const userInteracted = () => {
+      bgMusic.play().catch(() => {});
+      document.removeEventListener('click', userInteracted);
+    };
+    document.addEventListener('click', userInteracted);
+  });
 
 
 

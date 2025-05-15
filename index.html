@@ -377,6 +377,33 @@
       background-color: #e5dff5;
       cursor: pointer;
     }
+    .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.pagination button {
+  background-color: #ff8fab;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #905fcc;
+}
+
+.pagination button.active {
+  background-color: #905fcc;
+}
+
   
     @media (min-width: 600px) {
       .filtro-contenedor {
@@ -407,6 +434,8 @@
   
   
   <section class="products" id="productos"></section>
+  <div class="pagination" id="pagination"></div>
+
   <div class="cart" id="cart">
     <h3>🛍 Tu carrito</h3>
     <ul id="cart-items" style="padding-left: 1rem;"></ul>
@@ -419,41 +448,15 @@
   </footer>
 
   <script>
-    
-
     document.addEventListener('DOMContentLoaded', function () {
-  const modal = document.getElementById('nombreModal');
-  const input = document.getElementById('nombreInput');
-  const btn = document.getElementById('guardarNombre');
-  const saludo = document.getElementById('saludo-usuario');
-
-  let nombre = localStorage.getItem('nombreUsuario');
-
-  if (!nombre) {
-    modal.style.display = 'flex';
-  } else {
-    saludo.textContent = `Hola, ${nombre}`;
-  }
-
-  btn.addEventListener('click', function () {
-    const nombreIngresado = input.value.trim();
-    if (nombreIngresado) {
-      localStorage.setItem('nombreUsuario', nombreIngresado);
-      saludo.textContent = `Hola, ${nombreIngresado}`;
-      modal.style.display = 'none';
-    } else {
-      alert("Por favor ingresa un nombre válido.");
-    }
-  });
-});
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
+      // Variables globales
+      let currentPage = 1;
+      const itemsPerPage = window.innerWidth < 600 ? 2 : 4;
+  
       const catalogo = [
         { nombre: 'Aretes gatitos', precio: 13, categoria: 'Aretes', imagen: 'https://img.kwcdn.com/product/fancy/4e73342b-27bd-495d-8b80-2c5d71db1a1a.jpg?imageView2/2/w/800/q/70/format/webp' },
         { nombre: 'Pulsera Maneki-neko', precio: 12, categoria: 'Pulsera', imagen: 'https://img.kwcdn.com/product/fancy/28c3c30c-d043-4791-a8db-19857b1d9c2f.jpg?imageView2/2/w/800/q/70/format/webp' },
-        { nombre: 'Aretes gatito perla', precio: 11, categoria: 'Aretes', imagen: 'https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/c4e40626d0658ce496db2868a2913f95.jpg?imageView2/2/w/800/q/70/format/webp', },
+        { nombre: 'Aretes gatito perla', precio: 11, categoria: 'Aretes', imagen: 'https://img.kwcdn.com/product/Fancyalgo/VirtualModelMatting/c4e40626d0658ce496db2868a2913f95.jpg?imageView2/2/w/800/q/70/format/webp' },
         { nombre: 'Aretes asimétricos, gatito / pez', precio: 10, categoria: 'Collar', imagen: 'https://img.kwcdn.com/product/open/1ef7487bdd6448029cf37e4fe37f900f-goods.jpeg?imageView2/2/w/800/q/70/format/webp' }
       ];
   
@@ -466,21 +469,84 @@
       let carrito = [];
       let total = 0;
   
+      // Mostrar productos con paginación
       function mostrarProductos(productos) {
         container.innerHTML = "";
-        productos.forEach((item, index) => {
+  
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const productosPagina = productos.slice(start, end);
+  
+        productosPagina.forEach((item) => {
+          const realIndex = catalogo.indexOf(item);
           const card = document.createElement("div");
           card.className = "product-card";
           card.innerHTML = `
             <img src="${item.imagen}" alt="${item.nombre}">
             <h3>${item.nombre}</h3>
             <p>S/ ${item.precio.toFixed(2)}</p>
-            <button onclick="agregarAlCarrito(${index})">Agregar</button>
+            <button onclick="agregarAlCarrito(${realIndex})">Agregar</button>
           `;
           container.appendChild(card);
         });
+  
+        renderPagination(productos.length);
       }
   
+      // Paginación
+      function renderPagination(totalItems) {
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = '';
+  
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = '« Anterior';
+        prevBtn.disabled = currentPage === 1;
+        prevBtn.onclick = () => {
+          currentPage--;
+          filtrarYOrdenar();
+        };
+        paginationContainer.appendChild(prevBtn);
+  
+        for (let i = 1; i <= totalPages; i++) {
+          const pageBtn = document.createElement('button');
+          pageBtn.textContent = i;
+          if (i === currentPage) pageBtn.classList.add('active');
+          pageBtn.onclick = () => {
+            currentPage = i;
+            filtrarYOrdenar();
+          };
+          paginationContainer.appendChild(pageBtn);
+        }
+  
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = 'Siguiente »';
+        nextBtn.disabled = currentPage === totalPages;
+        nextBtn.onclick = () => {
+          currentPage++;
+          filtrarYOrdenar();
+        };
+        paginationContainer.appendChild(nextBtn);
+      }
+  
+      // Filtro y orden
+      window.filtrarYOrdenar = function () {
+        const categoria = document.getElementById("categoria").value;
+        const orden = document.getElementById("orden").value;
+  
+        let productosFiltrados = catalogo.filter(item => categoria === "todos" || item.categoria === categoria);
+  
+        if (orden === "asc") {
+          productosFiltrados.sort((a, b) => a.precio - b.precio);
+        } else if (orden === "desc") {
+          productosFiltrados.sort((a, b) => b.precio - a.precio);
+        }
+  
+        mostrarProductos(productosFiltrados);
+      };
+  
+      // Carrito
       window.agregarAlCarrito = function (index) {
         const item = catalogo[index];
         carrito.push(item);
@@ -502,10 +568,9 @@
         const mensaje = carrito.map(item => `${item.nombre} - S/ ${item.precio.toFixed(2)}`).join('\n');
         const totalFinal = total.toFixed(2);
         const mensajeWhatsApp = encodeURIComponent(`Hola, quiero finalizar la compra con los siguientes productos:\n${mensaje}\nTotal: S/ ${totalFinal}`);
-        const numero = '51907585882'; // Tu número con código país
+        const numero = '51907585882'; // Número de WhatsApp
         window.open(`https://wa.me/${numero}?text=${mensajeWhatsApp}`, "_blank");
   
-        // Resetear carrito
         carrito = [];
         total = 0;
         cartList.innerHTML = "";
@@ -514,52 +579,60 @@
         cartBox.style.display = "none";
       };
   
-      window.filtrarYOrdenar = function () {
-        const categoria = document.getElementById("categoria").value;
-        const orden = document.getElementById("orden").value;
-  
-        let productosFiltrados = catalogo.filter(item => categoria === "todos" || item.categoria === categoria);
-  
-        if (orden === "asc") {
-          productosFiltrados.sort((a, b) => a.precio - b.precio);
-        } else if (orden === "desc") {
-          productosFiltrados.sort((a, b) => b.precio - a.precio);
-        }
-  
-        mostrarProductos(productosFiltrados);
-      };
-  
-      // Mostrar todos los productos al inicio
-      mostrarProductos(catalogo);
+      // Mostrar productos al cargar
+      filtrarYOrdenar();
     });
-
-
-
-    let titleText = "🐾✨Gugu's Store🐾✨";
-  let position = 0;
-
-  function scrollTitle() {
-    document.title = titleText.substring(position) + titleText.substring(0, position);
-    position = (position + 1) % titleText.length;
-    setTimeout(scrollTitle, 200); // cambia la velocidad (en milisegundos)
-  }
-
-  scrollTitle();
-
-
   
-  document.addEventListener('DOMContentLoaded', function () {
-    const bgMusic = document.getElementById('bgMusic');
-    const userInteracted = () => {
-      bgMusic.play().catch(() => {});
-      document.removeEventListener('click', userInteracted);
-    };
-    document.addEventListener('click', userInteracted);
-  });
-
-
-
+    // Título animado
+    let titleText = "🐾✨Gugu's Store🐾✨";
+    let position = 0;
+  
+    function scrollTitle() {
+      document.title = titleText.substring(position) + titleText.substring(0, position);
+      position = (position + 1) % titleText.length;
+      setTimeout(scrollTitle, 200);
+    }
+  
+    scrollTitle();
+  
+    // Reproducir música al hacer clic
+    document.addEventListener('DOMContentLoaded', function () {
+      const bgMusic = document.getElementById('bgMusic');
+      const userInteracted = () => {
+        bgMusic.play().catch(() => {});
+        document.removeEventListener('click', userInteracted);
+      };
+      document.addEventListener('click', userInteracted);
+    });
+  
+    // Modal de nombre de usuario
+    document.addEventListener('DOMContentLoaded', function () {
+      const modal = document.getElementById('nombreModal');
+      const input = document.getElementById('nombreInput');
+      const btn = document.getElementById('guardarNombre');
+      const saludo = document.getElementById('saludo-usuario');
+  
+      let nombre = localStorage.getItem('nombreUsuario');
+  
+      if (!nombre) {
+        modal.style.display = 'flex';
+      } else {
+        saludo.textContent = `Hola, ${nombre}`;
+      }
+  
+      btn.addEventListener('click', function () {
+        const nombreIngresado = input.value.trim();
+        if (nombreIngresado) {
+          localStorage.setItem('nombreUsuario', nombreIngresado);
+          saludo.textContent = `Hola, ${nombreIngresado}`;
+          modal.style.display = 'none';
+        } else {
+          alert("Por favor ingresa un nombre válido.");
+        }
+      });
+    });
   </script>
+  
   
 
 </body>
